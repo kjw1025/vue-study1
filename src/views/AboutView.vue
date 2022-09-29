@@ -1,35 +1,33 @@
 <template>
-  <div class="about">
-    <p>{{ setData }}</p>
-  </div>
+  <div class="about"></div>
 </template>
 
 <script>
 import axios from "axios";
 export default {
   setup() {
-    const setData = [];
+    let id = "DeHyXTOI0F6OhYCzWQk8";
+    let pass = "0RDDq8mv2N";
 
-    const shoppingData = async () => {
-      const URL = "https://openapi.naver.com/v1/search/movie.json";
-      const ClientID = "DeHyXTOI0F6OhYCzWQk8";
-      const ClientSecret = "0RDDq8mv2N";
-
-      await axios
-        .get(URL, {
+    axios
+      .get(
+        "https://cors-anywhere.herokuapp.com/https://openapi.naver.com/v1/search/movie.json",
+        {
+          params: { query: "starwars", display: 20 },
           headers: {
-            "X-Naver-Client-Id": ClientID,
-            "X-Naver-Client-Secret": ClientSecret,
+            Accept: "*/*",
+            "X-Naver-Client-Id": id,
+            "X-Naver-Client-Secret": pass,
           },
-        })
-        .then((res) => setData(res.data))
-        .catch((err) => console.log(err));
-    };
-    shoppingData();
+        }
+      )
+      .then((response) => {
+        let resData = response.data.items;
+        console.log(resData);
+      })
+      .catch((err) => console.log(err));
 
-    return {
-      setData,
-    };
+    return {};
   },
 };
 </script>
